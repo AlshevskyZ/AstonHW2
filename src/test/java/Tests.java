@@ -1,24 +1,24 @@
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.List;
-
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Tests {
-    private static WebDriver driver;
-    static {
+    private static WebDriver driver = new ChromeDriver();
+    @BeforeAll
+    public static void start() {
         System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe" );
-        driver = new ChromeDriver();
+        driver.get("http://mts.by");
+        driver.findElement(By.xpath("//*[@id=\"cookie-agree\"]")).click();//нажатие кнопки cookie файлов
+    }
+    @AfterEach
+    private void setDriver(){
         driver.get("http://mts.by");
     }
     @Test
@@ -49,8 +49,9 @@ public class Tests {
         driver.findElement(By.xpath("//*[@id=\"connection-sum\"]")).sendKeys("25");
         driver.findElement(By.xpath("//*[@id=\"connection-email\"]")).sendKeys("alshevsky@gmail.com");
         driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button")).click();
-        Thread.sleep(5000);
-        boolean isVisible = driver.switchTo().frame(0).findElement(By.name("/html/body/app-root/div/div/div/app-payment-container/section")).isDisplayed();
+        Thread.sleep(15000);
+        boolean isVisible = driver.switchTo().frame(0).findElement(By.xpath("/html/body/app-root/div/div/div/" +
+                "app-payment-container/section/div/app-card-page/div/div[2]/div")).isDisplayed();
         assertEquals(isVisible,true);
     }
 }
