@@ -31,13 +31,14 @@ public class Tests {
     }
     @Test
     public void checkPayLogos() {
-       List<WebElement> logos = driver.findElements(By.xpath("//*[@id=\"pay-section\"]" +
-               "/div/div/div[2]/section/div/div[2]/ul"));
-       assertTrue(!logos.isEmpty(), "Логотипов нет!");
+        List<WebElement> logos = driver.findElements(By.xpath("//*[@id=\"pay-section\"]" +
+                "/div/div/div[2]/section/div/div[2]/ul"));
+        assertTrue(!logos.isEmpty(), "Логотипов нет!");
     }
     @Test
     public void checkLink() {
-        WebElement moreInfoLink = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/a"));
+        WebElement moreInfoLink = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/" +
+                "section/div/a"));
         moreInfoLink.click();
         String expectUrl = "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/";
         String actualUrl = driver.getCurrentUrl();
@@ -47,11 +48,12 @@ public class Tests {
     public void checkButton() throws InterruptedException {
         driver.findElement(By.xpath("//*[@id=\"connection-phone\"]")).sendKeys("297777777");
         driver.findElement(By.xpath("//*[@id=\"connection-sum\"]")).sendKeys("25");
-        driver.findElement(By.xpath("//*[@id=\"connection-email\"]")).sendKeys("alshevsky@gmail.com");
+        driver.findElement(By.xpath("//*[@id=\"connection-email\"]")).sendKeys("alshevs" +
+                "ky@gmail.com");
         driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button")).click();
         Thread.sleep(15000);
-        boolean isVisible = driver.switchTo().frame(0).findElement(By.xpath("/html/body/app-root/div/div/div/" +
-                "app-payment-container/section/div/app-card-page/div/div[2]/div")).isDisplayed();
+        boolean isVisible = driver.switchTo().frame(1).findElement(By.xpath("/html/body/app-root/d"+
+                "iv/div/div/app-payment-container/section/div/div/span")).isDisplayed();
         assertEquals(isVisible,true);
     }
 }
