@@ -52,8 +52,7 @@ public class Tests {
                 "ky@gmail.com");
         driver.findElement(By.xpath("//*[@id=\"pay-connection\"]/button")).click();
         Thread.sleep(15000);
-        boolean isVisible = driver.switchTo().frame(1).findElement(By.xpath("/html/body/app-root/d"+
-                "iv/div/div/app-payment-container/section/div/div/span")).isDisplayed();
+        boolean isVisible = driver.findElement(By.className("bepaid-app")).isDisplayed();
         assertEquals(isVisible,true);
     }
 }
